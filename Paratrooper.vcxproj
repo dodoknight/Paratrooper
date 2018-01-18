@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="../../ofxCogEngine/COGEngine/COGEngine_common.props" />
+  <Import Project="../ofxCogEngine/COGEngine/COGEngine_common.props" />
   <Import Project="H:\DATACORE\core\CODE_PROJECTS\Projects_cur\OF_APH\libs\openFrameworksCompiled\project\vs\openFrameworksCommon.props" />
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -140,8 +140,11 @@ if errorlevel 1 exit 0 else exit %errorlevel</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\GameValues.cpp" />
     <ClCompile Include="src\main.cpp" />
-  </ItemGroup>  <ItemGroup>
+    <ClCompile Include="src\ParatrooperFactory.cpp" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="$(OF_ROOT)\libs\openFrameworksCompiled\project\vs\openframeworksLib.vcxproj">
       <Project>{5837595d-aca9-485c-8e76-729040ce4b0b}</Project>
     </ProjectReference>
@@ -150,24 +153,21 @@ if errorlevel 1 exit 0 else exit %errorlevel</Command>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="icon.rc">
-      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">/D_DEBUG %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">/D_DEBUG %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalIncludeDirectories>$(OF_ROOT)\libs\openFrameworksCompiled\project\vs</AdditionalIncludeDirectories>
-    </ResourceCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <Xml Include="Data\Assets\animations.xml" />
-    <Xml Include="Data\Assets\attranimations.xml" />
-    <Xml Include="Data\Assets\default_settings.xml" />
-    <Xml Include="Data\Assets\fonts.xml" />
-    <Xml Include="Data\Assets\global_settings.xml" />
-    <Xml Include="Data\Assets\project_settings.xml" />
-    <Xml Include="Data\Assets\scenes.xml">
-      <SubType>Designer</SubType>
-    </Xml>
-    <Xml Include="Data\Assets\spritesheets.xml" />
-    <Xml Include="Data\Assets\strings.xml" />
+    <ClInclude Include="src\CannonController.h" />
+    <ClInclude Include="src\CollisionManager.h" />
+    <ClInclude Include="src\CopterAnimator.h" />
+    <ClInclude Include="src\CopterComponent.h" />
+    <ClInclude Include="src\CopterSpawner.h" />
+    <ClInclude Include="src\DeathAnimation.h" />
+    <ClInclude Include="src\DeathChecker.h" />
+    <ClInclude Include="src\GameManager.h" />
+    <ClInclude Include="src\GameValues.h" />
+    <ClInclude Include="src\ParatrooperComponent.h" />
+    <ClInclude Include="src\ParatrooperFactory.h" />
+    <ClInclude Include="src\ParatrooperModel.h" />
+    <ClInclude Include="src\ProjectileComponent.h" />
+    <ClInclude Include="src\ScoreComponent.h" />
+    <ClInclude Include="src\SoundComponent.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
 </Project>
