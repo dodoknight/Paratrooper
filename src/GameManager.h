@@ -18,6 +18,7 @@ using namespace Cog;
  */
 class GameManager : public Behavior {
 	ParatrooperModel* model;
+	ParatrooperFactory* factory;
 	uint64_t gameOverTime = 0;
 	uint64_t lastAbsolute = 0;
 public:
@@ -26,6 +27,7 @@ public:
 	virtual void OnInit() {
 		SubscribeForMessages(COLLISION, PROJECTILE_SHOT, UNIT_KILLED, UNIT_LANDED);
 		model = owner->GetSceneRoot()->GetAttr<ParatrooperModel*>(MODEL);
+		factory = GETCOMPONENT(ParatrooperFactory);
 	}
 
 	virtual void OnMessage(Msg& msg) {
@@ -56,7 +58,8 @@ public:
 
 		// just wait 5 seconds after game over and reset the game
 		if (model->isGameOver && (absolute - gameOverTime) > 5000) {
-			// TODO owner->GetContext()->ResetGame();
+			factory->ResetGame();
+			Finish();
 		}
 	}
 

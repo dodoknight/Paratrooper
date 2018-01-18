@@ -13,7 +13,7 @@ class ParatrooperModel;
  */
 class ParatrooperFactory : public Component {
 public:
-
+	bool resetGamePending = false;
 	ParatrooperModel* LoadGameModel();
 
 	void InitializeGame(Cog::Node* rootObject, ParatrooperModel* model);
@@ -24,7 +24,9 @@ public:
 
 	void CreateCopter(Cog::Node* owner, ParatrooperModel* model);
 
-	virtual void Update(const uint64 delta, const uint64 absolute) {
-
+	void ResetGame() {
+		resetGamePending = true;
 	}
+
+	virtual void Update(const uint64 delta, const uint64 absolute);
 };

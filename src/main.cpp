@@ -30,7 +30,7 @@ class ParatrooperApp : public ofxCogApp {
 #endif
 
 int main() {
-	ofSetupOpenGL(1600, 900, OF_WINDOW);
+	ofSetupOpenGL(800, 450, OF_WINDOW);
 	ofRunApp(new ParatrooperApp());
 	return 0;
 }

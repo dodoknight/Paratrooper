@@ -15,6 +15,7 @@
 #include "CopterSpawner.h"
 #include "jsonxx.h"
 #include "Node.h"
+#include "Stage.h"
 
 using namespace jsonxx;
 using namespace Cog;
@@ -213,4 +214,16 @@ void ParatrooperFactory::CreateCopter(Node* owner, ParatrooperModel* model) {
 	copter->AddBehavior(new CopterAnimator());
 
 	COGLOGDEBUG("Factory", "Copter created");
+}
+
+void ParatrooperFactory::Update(const uint64 delta, const uint64 absolute) {
+	if (resetGamePending) {
+		resetGamePending = false;
+		auto stage = GETCOMPONENT(Stage);
+		auto scene = stage->GetActualScene();
+		scene->Finish();
+		scene->Init();
+		auto model = this->LoadGameModel();
+		InitializeGame(stage->GetActualScene()->GetSceneNode(), model);
+	}
 }
