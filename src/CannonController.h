@@ -22,7 +22,7 @@ private:
 public:
 	
 	virtual void OnInit() {
-		gameModel = owner->GetRoot()->GetAttr<ParatrooperModel*>(MODEL);
+		gameModel = owner->GetSceneRoot()->GetAttr<ParatrooperModel*>(MODEL);
 		factory = GETCOMPONENT(ParatrooperFactory);
 	}
 
@@ -40,10 +40,10 @@ protected:
 		auto& trans = owner->GetTransform();
 
 		if (direction == Dir::LEFT) {
-			trans.rotation -= 0.003f*delta;
+			trans.rotation -= 0.03f*delta;
 		}
 		else {
-			trans.rotation += 0.003f*delta;
+			trans.rotation += 0.03f*delta;
 		}
 
 		// check boundaries

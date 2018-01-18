@@ -54,7 +54,12 @@ ParatrooperModel* ParatrooperFactory::LoadGameModel() {
 void ParatrooperFactory::InitializeGame(Node* rootObject, ParatrooperModel* model) {
 	
 	auto scene = rootObject->GetScene();
-	
+	scene->SetCustomWidth(100);
+
+	CogSetGameSpeed(0.1f);
+
+	TransformBuilder transBld;
+
 	// create all visible objects
 	auto tower = new Node(OBJECT_TOWER);
 	auto turret = new Node(OBJECT_TURRET);
@@ -108,16 +113,14 @@ void ParatrooperFactory::InitializeGame(Node* rootObject, ParatrooperModel* mode
 	cannon->AddBehavior(new CannonInputController());
 	
 	// update all transformations
+	rootObject->SubmitChanges(true);
 	rootObject->UpdateTransform(true);
 
-	TransformBuilder transBld;
-	auto meshDefaultScale = CogGetVirtualWidth() / 400.0f;
-
 	// use magic builder to set positions of all children
-	transBld.RelativePosition(0.80f, 1.01f).Anchor(1, 1).ZIndex(2).LocalScale(meshDefaultScale, meshDefaultScale).BuildAndReset(score);			// score
-	transBld.RelativePosition(0.10f, 1.01f).Anchor(1, 1).ZIndex(2).LocalScale(meshDefaultScale, meshDefaultScale).BuildAndReset(lives);			// lives
-	transBld.RelativePosition(0.5f, 0.5f).Anchor(0.5f, 0.5f).ZIndex(2).LocalScale(meshDefaultScale, meshDefaultScale).BuildAndReset(gameOver);	// game over label
-	transBld.RelativePosition(0.5f, 0.94f).Anchor(0.5f, 1).LocalScale(meshDefaultScale, meshDefaultScale).ZIndex(2).BuildAndReset(tower);		// tower
+	transBld.RelativePosition(0.80f, 1.01f).Anchor(1, 1).ZIndex(2).BuildAndReset(score);														// score
+	transBld.RelativePosition(0.10f, 1.01f).Anchor(1, 1).ZIndex(2).BuildAndReset(lives);														// lives
+	transBld.RelativePosition(0.5f, 0.5f).Anchor(0.5f, 0.5f).ZIndex(2).BuildAndReset(gameOver);													// game over label
+	transBld.RelativePosition(0.5f, 0.94f).Anchor(0.5f, 1).ZIndex(2).BuildAndReset(tower);														// tower
 	transBld.RelativePosition(0.5f, 0).Anchor(0.5f, 1).ZIndex(2).BuildAndReset(turret);															// turret
 	transBld.RelativePosition(0.5f, 0.35f).Anchor(0.5f, 1).ZIndex(1).RotationCenter(0.5f, 1).BuildAndReset(cannon);								// cannon
 	transBld.RelativePosition(0, 0.94f).Anchor(0, 1).ZIndex(1).BuildAndReset(ground);															// ground
@@ -129,22 +132,21 @@ void ParatrooperFactory::CreateProjectile(Node* canon, ParatrooperModel* model) 
 	projectile->SetMesh(spt<Image>(new Image(projectileImg)));
 	projectile->SetState(FLAG_PROJECTILE);
 
-	auto rootObject = canon->GetRoot();
+	auto rootObject = canon->GetSceneRoot();
 	auto canonTrans = canon->GetTransform();
 
 	TransformBuilder transBld;
 
 	rootObject->AddChild(projectile);
+	rootObject->SubmitChanges(true);
 
-	float rotation = canon->GetTransform().rotation;
+	float rotation = ofDegToRad(canon->GetTransform().rotation);
 	auto absWidth = canonTrans.absScale.x * canon->GetMesh()->GetWidth();
 	auto absHeight = canonTrans.absScale.y * canon->GetMesh()->GetHeight();
-	auto meshDefaultScale = CogGetVirtualWidth() / 400.0f;
-
+	
 	// we need the projectile to be at the same location as the cannon with current rotation
 	transBld.AbsolutePosition(canonTrans.absPos.x + absWidth * 0.5f + absHeight * sin(rotation), 
-		canonTrans.absPos.y + absHeight - absHeight * cos(rotation))
-		.LocalScale(meshDefaultScale, meshDefaultScale).Build(projectile);
+		canonTrans.absPos.y + absHeight - absHeight * cos(rotation)).Build(projectile);
 
 	float velocityX = model->projectileVelocity * cos(rotation - PI / 2);
 	float velocityY = model->projectileVelocity * sin(rotation - PI / 2);
@@ -155,6 +157,7 @@ void ParatrooperFactory::CreateProjectile(Node* canon, ParatrooperModel* model) 
 
 	projectile->AddAttr(ATTR_MOVEMENT, dynamics);
 	projectile->AddBehavior(new ProjectileComponent());
+	
 	COGLOGDEBUG("Factory", "Projectile created");
 }
 
@@ -170,11 +173,13 @@ void ParatrooperFactory::CreateParatrooper(Node* owner, ParatrooperModel* model)
 	dynamics->SetAcceleration(ofVec2f(0, model->gravity));
 	paratrooper->AddAttr(ATTR_MOVEMENT, dynamics);
 
-	auto rootObject = owner->GetRoot();
+	auto rootObject = owner->GetSceneRoot();
 	rootObject->AddChild(paratrooper);
+	rootObject->SubmitChanges(true);
 	paratrooper->AddAttr(PARA_STATE, ParaState::FALLING);
 	paratrooper->AddBehavior(new ParatrooperComponent());
 	COGLOGDEBUG("Factory", "Paratrooper created");
+
 }
 
 void ParatrooperFactory::CreateCopter(Node* owner, ParatrooperModel* model) {
@@ -184,9 +189,10 @@ void ParatrooperFactory::CreateCopter(Node* owner, ParatrooperModel* model) {
 	copter->SetMesh(copterImage);
 	copter->SetState(FLAG_COLLIDABLE);
 
-	auto rootObject = owner->GetRoot();
+	auto rootObject = owner->GetSceneRoot();
 
 	rootObject->AddChild(copter);
+	rootObject->SubmitChanges(true);
 	TransformBuilder transBld;
 
 	// 50% probability that the copter will be spawned on the left side
@@ -195,10 +201,8 @@ void ParatrooperFactory::CreateCopter(Node* owner, ParatrooperModel* model) {
 	float posY = ofRandom(model->copterSpawnMinY, model->copterSpawnMaxY);
 	float posX = spawnLeft ? -0.2f : 1.2f;
 
-	auto meshDefaultScale = CogGetVirtualWidth() / 400.0f;
 	transBld.RelativePosition(posX, posY)
-	.Anchor(0.5f, 0.5f)
-	.LocalScale(meshDefaultScale, meshDefaultScale).Build(copter);
+	.Anchor(0.5f, 0.5f).Build(copter);
 
 	float velocity = (spawnLeft ? 1 : -1) * ofRandom(model->copterMinVelocity, model->copterMaxVelocity);
 	auto dynamics = new Dynamics();
@@ -207,5 +211,6 @@ void ParatrooperFactory::CreateCopter(Node* owner, ParatrooperModel* model) {
 
 	copter->AddBehavior(new CopterComponent());
 	copter->AddBehavior(new CopterAnimator());
+
 	COGLOGDEBUG("Factory", "Copter created");
 }

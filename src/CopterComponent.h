@@ -24,7 +24,7 @@ private:
 public:
 
 	virtual void OnInit() {
-		gameModel = owner->GetRoot()->GetAttr<ParatrooperModel*>(MODEL);
+		gameModel = owner->GetSceneRoot()->GetAttr<ParatrooperModel*>(MODEL);
 		// frequency is dynamic, we need to take its initial value
 		spawnFrequency = gameModel->paratrooperSpawnFrequency;
 		factory = GETCOMPONENT(ParatrooperFactory);

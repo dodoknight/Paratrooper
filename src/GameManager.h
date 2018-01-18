@@ -25,7 +25,7 @@ public:
 
 	virtual void OnInit() {
 		SubscribeForMessages(COLLISION, PROJECTILE_SHOT, UNIT_KILLED, UNIT_LANDED);
-		model = owner->GetRoot()->GetAttr<ParatrooperModel*>(MODEL);
+		model = owner->GetSceneRoot()->GetAttr<ParatrooperModel*>(MODEL);
 	}
 
 	virtual void OnMessage(Msg& msg) {

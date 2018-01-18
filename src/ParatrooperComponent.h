@@ -33,7 +33,7 @@ public:
 		paratrooper = CogGet2DImage(FILE_PARATROOPER);
 		paratrooperParachute = CogGet2DImage(FILE_PARATROOPER_PARACHUTE);
 		lastState = owner->GetAttr<ParaState>(PARA_STATE);
-		model = owner->GetRoot()->GetAttr<ParatrooperModel*>(MODEL);
+		model = owner->GetSceneRoot()->GetAttr<ParatrooperModel*>(MODEL);
 	}
 
 	virtual void Update(uint64_t delta, uint64_t absolute) {
@@ -150,17 +150,17 @@ private:
 			if (lastState == ParaState::FALLING && state == ParaState::FALLING_PARACHUTE) {
 				owner->GetMesh<Image>()->SetImage(paratrooperParachute);
 				owner->GetTransform().CalcAbsTransform(owner->GetParent()->GetTransform());
-				transBld.AbsolutePosition(paraBB.bottomLeft.x + paraBB.GetSize().x / 2, paraBB.bottomLeft.y).Anchor(0.5f, 1).LocalScale(trans.scale.x, trans.scale.y).Build(owner);
+				transBld.AbsolutePosition(paraBB.bottomLeft.x + paraBB.GetSize().x / 2, paraBB.bottomLeft.y).Anchor(0.5f, 1).LocalScale(trans.scale.x, trans.scale.y).CheckSceneScale(false).Build(owner);
 			}
 			else if (lastState == ParaState::FALLING_PARACHUTE && state == ParaState::FALLING_WIHTOUT_PARACHUTE) {
 				owner->GetMesh<Image>()->SetImage(paratrooper);
 				owner->GetTransform().CalcAbsTransform(owner->GetParent()->GetTransform());
-				transBld.AbsolutePosition(paraBB.bottomLeft.x + paraBB.GetSize().x / 2, paraBB.bottomLeft.y).Anchor(0.5f, 1).LocalScale(trans.scale.x, trans.scale.y).Build(owner);
+				transBld.AbsolutePosition(paraBB.bottomLeft.x + paraBB.GetSize().x / 2, paraBB.bottomLeft.y).Anchor(0.5f, 1).LocalScale(trans.scale.x, trans.scale.y).CheckSceneScale(false).Build(owner);
 			}
 			else if (lastState == ParaState::FALLING_PARACHUTE && state == ParaState::ON_GROUND) {
 				owner->GetMesh<Image>()->SetImage(paratrooper);
 				owner->GetTransform().CalcAbsTransform(owner->GetParent()->GetTransform());
-				transBld.AbsolutePosition(paraBB.bottomLeft.x + paraBB.GetSize().x / 2, paraBB.bottomLeft.y).Anchor(0.5f, 1).LocalScale(trans.scale.x, trans.scale.y).Build(owner);
+				transBld.AbsolutePosition(paraBB.bottomLeft.x + paraBB.GetSize().x / 2, paraBB.bottomLeft.y).Anchor(0.5f, 1).LocalScale(trans.scale.x, trans.scale.y).CheckSceneScale(false).Build(owner);
 			}
 		}
 	}

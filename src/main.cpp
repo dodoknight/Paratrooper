@@ -13,13 +13,15 @@ class ParatrooperApp : public ofxCogApp {
 
 
 	void InitComponents() {	
-		auto factory = GETCOMPONENT(ParatrooperFactory);
-		auto model = factory->LoadGameModel();
-		//factory->InitializeGame(root, model);
+		// set native size
+		GETCOMPONENT(Environment)->SetNativeSize(800, 450);
 	}
 
 	void InitStage(Stage* stage) {
-		ofxCogEngine::GetInstance().LoadStage();
+		stage->AddScene(new Scene("default", false), true);
+		auto factory = GETCOMPONENT(ParatrooperFactory);
+		auto model = factory->LoadGameModel();
+		factory->InitializeGame(stage->GetActualScene()->GetSceneNode(), model);
 	}
 };
 
@@ -28,7 +30,7 @@ class ParatrooperApp : public ofxCogApp {
 #endif
 
 int main() {
-	ofSetupOpenGL(800, 450, OF_WINDOW);
+	ofSetupOpenGL(1600, 900, OF_WINDOW);
 	ofRunApp(new ParatrooperApp());
 	return 0;
 }

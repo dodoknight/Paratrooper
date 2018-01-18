@@ -20,7 +20,7 @@ public:
 
 	virtual void OnInit() {
 		SubscribeForMessages(UNIT_KILLED);
-		model = owner->GetRoot()->GetAttr<ParatrooperModel*>(MODEL);
+		model = owner->GetSceneRoot()->GetAttr<ParatrooperModel*>(MODEL);
 		// get the initial value
 		this->spawnFrequency = model->copterSpawnFrequency;
 		factory = GETCOMPONENT(ParatrooperFactory);

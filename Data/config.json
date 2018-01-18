@@ -1,7 +1,7 @@
 {
 	"max_landed_units" : 10,
-	"min_cannon_angle" : -1.35,
-	"max_cannon_angle" : 1.35,
+	"min_cannon_angle" : -45,
+	"max_cannon_angle" : 45,
 	"cannon_fire_rate" : 6,
 	"paratrooper_spawn_frequency" : 0.4,
 	"copter_spawn_frequency" : 0.2,
