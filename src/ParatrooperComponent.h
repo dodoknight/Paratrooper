@@ -150,17 +150,17 @@ private:
 			if (lastState == ParaState::FALLING && state == ParaState::FALLING_PARACHUTE) {
 				owner->GetMesh<Image>()->SetImage(paratrooperParachute);
 				owner->GetTransform().CalcAbsTransform(owner->GetParent()->GetTransform());
-				transBld.AbsolutePosition(paraBB.bottomLeft.x + paraBB.GetSize().x / 2, paraBB.bottomLeft.y).Anchor(0.5f, 1).LocalScale(trans.scale.x, trans.scale.y).CheckSceneScale(false).Build(owner);
+				transBld.AbsolutePosition(paraBB.bottomLeft.x + paraBB.GetSize().x / 2, paraBB.bottomLeft.y).Anchor(0.5f, 1).LocalScale(trans.scale.x, trans.scale.y).CheckSceneScale(false).CheckNativeResolution(false).Build(owner);
 			}
 			else if (lastState == ParaState::FALLING_PARACHUTE && state == ParaState::FALLING_WIHTOUT_PARACHUTE) {
 				owner->GetMesh<Image>()->SetImage(paratrooper);
 				owner->GetTransform().CalcAbsTransform(owner->GetParent()->GetTransform());
-				transBld.AbsolutePosition(paraBB.bottomLeft.x + paraBB.GetSize().x / 2, paraBB.bottomLeft.y).Anchor(0.5f, 1).LocalScale(trans.scale.x, trans.scale.y).CheckSceneScale(false).Build(owner);
+				transBld.AbsolutePosition(paraBB.bottomLeft.x + paraBB.GetSize().x / 2, paraBB.bottomLeft.y).Anchor(0.5f, 1).LocalScale(trans.scale.x, trans.scale.y).CheckSceneScale(false).CheckNativeResolution(false).Build(owner);
 			}
 			else if (lastState == ParaState::FALLING_PARACHUTE && state == ParaState::ON_GROUND) {
 				owner->GetMesh<Image>()->SetImage(paratrooper);
 				owner->GetTransform().CalcAbsTransform(owner->GetParent()->GetTransform());
-				transBld.AbsolutePosition(paraBB.bottomLeft.x + paraBB.GetSize().x / 2, paraBB.bottomLeft.y).Anchor(0.5f, 1).LocalScale(trans.scale.x, trans.scale.y).CheckSceneScale(false).Build(owner);
+				transBld.AbsolutePosition(paraBB.bottomLeft.x + paraBB.GetSize().x / 2, paraBB.bottomLeft.y).Anchor(0.5f, 1).LocalScale(trans.scale.x, trans.scale.y).CheckSceneScale(false).CheckNativeResolution(false).Build(owner);
 			}
 		}
 	}

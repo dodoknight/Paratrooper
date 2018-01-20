@@ -40,10 +40,10 @@ protected:
 		auto& trans = owner->GetTransform();
 
 		if (direction == Dir::LEFT) {
-			trans.rotation -= 0.03f*delta;
+			trans.rotation -= 0.1f*delta;
 		}
 		else {
-			trans.rotation += 0.03f*delta;
+			trans.rotation += 0.1f*delta;
 		}
 
 		// check boundaries

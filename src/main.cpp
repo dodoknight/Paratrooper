@@ -6,7 +6,6 @@
 
 class ParatrooperApp : public ofxCogApp {
 
-
 	void RegisterComponents() {
 		REGISTER_COMPONENT(new ParatrooperFactory());
 	}
@@ -44,6 +43,3 @@ extern "C" {
 	}
 }
 #endif
-
-
-
