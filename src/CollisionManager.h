@@ -47,7 +47,7 @@ public:
 
 	virtual void Update(uint64_t delta, uint64_t absolute) {
 
-		vector<spt<CollisionTrigger>> collides;
+		vector<RefCountedObjectPtr<CollisionTrigger>> collides;
 
 		// O(m^n), we don't suppose there will be more than 50 units in total
 		for (auto projectile : projectiles) {
@@ -56,7 +56,7 @@ public:
 					if (!unit->HasState(FLAG_DEAD)) {
 						if (Collides(projectile, unit)) {
 							COGLOGDEBUG("CollisionManager", "Collision with %s", unit->GetTag().c_str());
-							collides.push_back(spt<CollisionTrigger>(new CollisionTrigger(unit, projectile )));
+							collides.push_back((new CollisionTrigger(unit, projectile )));
 						}
 					}
 				}
