@@ -28,6 +28,8 @@ Clone of a 1982 computer game. The player controls a turret and earns points by 
 * RIGHT ARROW - rotate cannon right
 * LEFT ALT - fire
 
-## Compatibility
+## Installation
 
-Works with ofxCogEngine 0.35
+First, install <a href="https://openframeworks.cc/" target="_blank">OpenFrameworks </a> framework, following instructions on their web. Recommended version is 0.9.8.
+
+Second, download <a href="https://github.com/dodoknight/CogEngine/releases/tag/0.35" target="_blank">CogEngine 0.35</a> game engine. Open the VS solution file and fix paths to both frameworks.
