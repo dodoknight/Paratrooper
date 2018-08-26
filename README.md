@@ -30,4 +30,4 @@ Clone of a 1982 computer game. The player controls a turret and earns points by 
 
 ## Compatibility
 
-Works with ofxCogEngine 0.3
+Works with ofxCogEngine 0.35
